@@ -1,0 +1,1 @@
+This is a proof-of-concept for using Tracktion Engine in a Flutter app. This demo only supports Windows, but the concepts should be the same for other platforms supported by both Flutter and Tracktion Engine.
