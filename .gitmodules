@@ -1,0 +1,4 @@
+[submodule ".\\engine\\deps\\JUCE"]
+	path = .\\engine\\deps\\JUCE
+	url = https://github.com/juce-framework/JUCE.git
+	branch = develop
