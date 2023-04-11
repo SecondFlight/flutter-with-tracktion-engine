@@ -8,18 +8,30 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Add JUCE library
 add_subdirectory(deps/JUCE)
 
-# # Add the JUCE-based project
-# juce_add_module(src/DemoEngine)
-
 # Set up the DLL target
 add_library(DemoEngine SHARED
-    src/DemoEngine.hpp
-    src/DemoEngine.cpp)
+    src/main.cpp
+    src/SineToneGenerator.cpp
+    src/SineToneGenerator.hpp
+    src/SineTonePlayer.cpp
+    src/SineTonePlayer.hpp)
+
+target_include_directories(DemoEngine PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 
 target_link_libraries(DemoEngine PRIVATE
-    juce::juce_core
     juce::juce_audio_basics
-    juce::juce_audio_devices)
+    juce::juce_audio_devices
+    juce::juce_audio_formats
+    juce::juce_audio_processors
+    juce::juce_audio_utils
+    juce::juce_core)
 
 # Export symbols
-target_compile_definitions(DemoEngine PRIVATE JUCE_DLL_BUILD=1)
+target_compile_definitions(DemoEngine PRIVATE JUCE_DLL_BUILD=1 JUCE_DLL=1)
+
+# Set target properties to build it as a shared library
+set_target_properties(DemoEngine PROPERTIES
+    BUNDLE_EXTENSION "dll"
+    SUFFIX ".dll"
+    OUTPUT_NAME "DemoEngine"
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}")
