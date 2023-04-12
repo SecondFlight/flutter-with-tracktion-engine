@@ -45,3 +45,4 @@ app.*.map.json
 
 # Engine
 /engine/build/
+/assets/DemoEngine.dll
