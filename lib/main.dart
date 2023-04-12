@@ -18,9 +18,41 @@
   along with this demo. If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
+typedef CreateSineTonePlayerFunc = Pointer Function();
+typedef CreateSineTonePlayerFuncDart = Pointer Function();
+
+typedef DestroySineTonePlayerFunc = Void Function(Pointer);
+typedef DestroySineTonePlayerFuncDart = void Function(Pointer);
+
+typedef StartPlayingFunc = Void Function(Pointer);
+typedef StartPlayingFuncDart = void Function(Pointer);
+
+typedef StopPlayingFunc = Void Function(Pointer);
+typedef StopPlayingFuncDart = void Function(Pointer);
+
+typedef SetFrequencyFunc = Void Function(Pointer, Double);
+typedef SetFrequencyFuncDart = void Function(Pointer, double);
+
 void main() {
+  // This is a hack. We should probably be modifying the Flutter CMake script
+  // to bundle this in the same folder as the executable.
+  final sineToneDll = DynamicLibrary.open('./data/flutter_assets/assets/DemoEngine.dll');
+
+  final createSineTonePlayer = sineToneDll.lookupFunction<CreateSineTonePlayerFunc, CreateSineTonePlayerFuncDart>('createSineTonePlayer');
+  final destroySineTonePlayer = sineToneDll.lookupFunction<DestroySineTonePlayerFunc, DestroySineTonePlayerFuncDart>('destroySineTonePlayer');
+  final startPlaying = sineToneDll.lookupFunction<StartPlayingFunc, StartPlayingFuncDart>('startPlaying');
+  final stopPlaying = sineToneDll.lookupFunction<StopPlayingFunc, StopPlayingFuncDart>('stopPlaying');
+  final setFrequency = sineToneDll.lookupFunction<SetFrequencyFunc, SetFrequencyFuncDart>('setFrequency');
+
+  final sineTonePlayer = createSineTonePlayer();
+
+  // Start playing the sine tone
+  startPlaying(sineTonePlayer);
+
   runApp(const MyApp());
 }
 
