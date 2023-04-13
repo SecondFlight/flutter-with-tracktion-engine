@@ -20,12 +20,16 @@ void SineToneGenerator::fillNextAudioBuffer(juce::AudioBuffer<float>& buffer)
     for (auto channel = 0; channel < numChannels; ++channel)
     {
         auto* channelData = buffer.getWritePointer(channel);
+        double channelCurrentAngle = currentAngle;
 
         for (auto sample = 0; sample < numSamples; ++sample)
         {
-            auto currentSample = (float)std::sin(currentAngle);
+            auto currentSample = (float)std::sin(channelCurrentAngle);
             channelData[sample] = currentSample;
-            currentAngle += angleDelta;
+            channelCurrentAngle += angleDelta;
         }
     }
+
+    // Update the global currentAngle for the next call
+    currentAngle += numSamples * angleDelta;
 }
