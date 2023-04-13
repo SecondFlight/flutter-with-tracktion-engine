@@ -1,5 +1,9 @@
 This is a proof-of-concept for using Tracktion Engine in a Flutter app. This demo only supports Windows, but the concepts should be the same for other platforms supported by both Flutter and Tracktion Engine.
 
+## Branches
+
+This repository contains two branches. The `main` branch contains a demo with JUCE and Tracktion Engine. The `juce-sine-tone` branch contains a simpler demo with only JUCE.
+
 ## Building
 
 ### Prerequisites
