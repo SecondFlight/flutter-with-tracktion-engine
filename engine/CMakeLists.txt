@@ -7,9 +7,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Add JUCE library
 add_subdirectory(deps/JUCE)
+add_subdirectory(deps/tracktion-engine)
 
 # Set up the DLL target
-add_library(DemoEngine SHARED
+juce_add_console_app(DemoEngine SHARED
     src/main.cpp
     src/SineToneGenerator.cpp
     src/SineToneGenerator.hpp
@@ -18,20 +19,21 @@ add_library(DemoEngine SHARED
 
 target_include_directories(DemoEngine PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 
-target_link_libraries(DemoEngine PRIVATE
+target_link_libraries(DemoEngine
+    PRIVATE
     juce::juce_audio_basics
     juce::juce_audio_devices
     juce::juce_audio_formats
     juce::juce_audio_processors
     juce::juce_audio_utils
-    juce::juce_core)
+    juce::juce_core
+    tracktion::tracktion_engine
+
+    PUBLIC
+    juce::juce_recommended_config_flags
+    juce::juce_recommended_lto_flags
+    juce::juce_recommended_warning_flags
+)
 
 # Export symbols
-target_compile_definitions(DemoEngine PRIVATE JUCE_DLL_BUILD=1 JUCE_DLL=1)
-
-# Set target properties to build it as a shared library
-set_target_properties(DemoEngine PROPERTIES
-    BUNDLE_EXTENSION "dll"
-    SUFFIX ".dll"
-    OUTPUT_NAME "DemoEngine"
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}")
+target_compile_definitions(DemoEngine PRIVATE JUCE_DLL_BUILD=1 JUCE_DLL=1 JUCE_DISABLE_CUSTOM_ALLOCATOR=1)
