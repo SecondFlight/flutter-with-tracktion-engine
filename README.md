@@ -14,10 +14,11 @@ You will need:
 - [CMake](https://cmake.org/download/)
 
 ### Instructions
-1. Clone the repo with `--recursive` (this repo includes JUCE and Tractkion as Git submodules)
-2. `cd (repo folder)/engine`
-3. Run `build.ps1`
-4. Run the Flutter project using `flutter run` or from your IDE
+1. Clone the repo
+2. Run `git submodule init` and `git submodule update` in the root of the repository
+3. `cd (repo folder)/engine`
+4. Run `build.ps1`
+5. Run the Flutter project using `flutter run` or from your IDE
 
 ## A note on bundling
 
