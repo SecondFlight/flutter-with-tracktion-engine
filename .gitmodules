@@ -1,4 +1,8 @@
 [submodule "engine/deps/JUCE"]
 	path = engine/deps/JUCE
 	url = https://github.com/juce-framework/JUCE.git
-	branch = master
+	tag = 7.0.5
+[submodule "engine/deps/tracktion-engine"]
+	path = engine/deps/tracktion-engine
+	url = https://github.com/Tracktion/tracktion_engine.git
+	tag = 2.1.0
